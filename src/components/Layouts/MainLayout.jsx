@@ -8,9 +8,6 @@ import Footer from "../common/footer";
 const MainLayout = (props) => {
    const {pathname}=props.location
 
-
-
-
     return (
         <Fragment>
             <div className="landing-layer">

@@ -1,6 +1,7 @@
 import React from "react"
 import {BrowserRouter} from "react-router-dom"
 import Toplearn from "./Toplearn";
+import {ToastContainer} from "react-toastify";
 
 const App = () => {
 
@@ -8,6 +9,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <Toplearn/>
+            <ToastContainer/>
 
         </BrowserRouter>
 
