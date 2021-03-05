@@ -27,6 +27,7 @@ const Login = ({history}) => {
         setEmail("")
         setPassword("")
     }
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         const user = {
@@ -84,7 +85,7 @@ const Login = ({history}) => {
                     <title>ورود در سایت</title>
                 </Helmet>
 
-                {loading?(<Sugar customLoading={loading} time={0}/>):null}
+                {/*<Sugar customLoading={loading} time={0}/>*/}
                 <div className="form-layer">
 
                     <form onSubmit={handleSubmit}>

@@ -70,6 +70,7 @@
 //             });
 //
 //
+
 //     }
 //
 //     return (
@@ -197,27 +198,6 @@ const Register = ({history}) => {
         }
     };
 
-    //         .then(({ data, status }) => {
-    //             if (status === 201) {
-    //                 toast.success("کاربر با موفقیت ساخته شد.", {
-    //                     position: "top-right",
-    //                     closeOnClick: true
-    //
-    //                 });
-    //                 reset();
-    //                 console.log(data);
-    //             }
-    //         })
-    //         .catch(ex => {
-    //             toast.error("مشکلی پیش آمده.", {
-    //                 position: "top-right",
-    //                 closeOnClick: true
-    //             });
-    //             console.log(ex);
-    //         });
-    //
-    //     console.log(user);
-    // };
 
     return (
         <main className="client-page">
