@@ -209,7 +209,7 @@ const Register = ({history}) => {
                     <title>عضویت در سایت</title>
                 </Helmet>
 
-                {loading?(<Sugar customLoading={loading} time={0}/>):null}
+                {/*{loading?(<Sugar customLoading={loading} time={0}/>):null}*/}
                 <div className="form-layer">
                     <form onSubmit={handleSubmit}>
                         <div className="input-group">

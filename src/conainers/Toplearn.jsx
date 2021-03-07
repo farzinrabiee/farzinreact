@@ -16,8 +16,8 @@ const Toplearn = () => {
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
                 <Route path="/archive" component={Archive}/>
+                <Route path="/course" component={SingleCourse}/>
                 <Route path="/profile" component={UserProfile}/>
-                <Route path="/single" component={SingleCourse}/>
                 <Route path="/" exact component={Course}/>
             </Switch>
         </MainLayout>
