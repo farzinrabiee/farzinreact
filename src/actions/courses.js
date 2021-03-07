@@ -5,6 +5,8 @@ export const getAllCourses = () => {
         const {data} = await getCourses()
 
 
+
       await dispatch({type:"INIT",payload:data.courses})
     }
 }
+
