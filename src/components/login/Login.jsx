@@ -5,9 +5,15 @@ import {loginUser} from "../../services/userService";
 import {withRouter} from "react-router";
 import {toast} from "react-toastify";
 import {Helmet} from "react-helmet";
+import {useDispatch} from "react-redux";
+import {addUser} from "../../actions/user";
+import {decodeToken} from "../../utils/decodeToken";
 
 
 const Login = ({history}) => {
+
+
+    const dispatch=useDispatch
 
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
@@ -47,12 +53,14 @@ const Login = ({history}) => {
                         closeOnClick: true
 
                     })
+                    console.log(data)
+
 
 
                     localStorage.setItem("token",data.token)
-                    setLoading(false)
+                    dispatch(addUser(decodeToken(data.token).payload.user))
+
                     history.replace("/")
-                    setLoading(false)
 
                     reset()
                 }
