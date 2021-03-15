@@ -2,15 +2,17 @@ import React, {useRef, useState} from "react"
 import SimpleReactValidator from "simple-react-validator";
 import {Sugar} from "react-preloaders"
 import {loginUser} from "../../services/userService";
-import {withRouter} from "react-router";
+import {Redirect, withRouter} from "react-router";
 import {toast} from "react-toastify";
 import {Helmet} from "react-helmet";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {addUser} from "../../actions/user";
 import {decodeToken} from "../../utils/decodeToken";
+import {isEmpty} from "lodash"
 
 
 const Login = ({history}) => {
+    const user=useSelector(state=>state.user)
 
 
     const dispatch=useDispatch
@@ -45,7 +47,7 @@ const Login = ({history}) => {
 
         try {
             if (validator.current.allValid()) {
-                setLoading(true)
+
                 const {status, data} = await loginUser(user)
                 if (status === 200) {
                     toast.success("کاربر وارد شد ", {
@@ -54,14 +56,10 @@ const Login = ({history}) => {
 
                     })
                     console.log(data)
-
-
-
                     localStorage.setItem("token",data.token)
-                    dispatch(addUser(decodeToken(data.token).payload.user))
-
+                    // dispatch(addUser(decodeToken(data.token).payload.user))
+                    // dispatch(addUser(decodeToken(data.token).payload.user));
                     history.replace("/")
-
                     reset()
                 }
             } else {
@@ -77,12 +75,14 @@ const Login = ({history}) => {
                 position: "top-right",
                 closeOnClick: true
             });
-            setLoading(false)
+
 
         }
 
 
     }
+    if (!isEmpty(user))  return <Redirect to="/"/>
+
 
     return (
         <main className="client-page">

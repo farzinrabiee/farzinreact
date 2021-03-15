@@ -179,7 +179,7 @@ const Register = ({history}) => {
                         closeOnClick: true
                     });
                     setLoading(false)
-                    history.push("/login")
+                    history.push("/Login")
 
                     reset();
                 }
