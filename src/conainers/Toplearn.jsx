@@ -12,9 +12,10 @@ import {paginate} from "../utils/paginate";
 import jwt from "jsonwebtoken"
 import {addUser, clearUser} from "../actions/user";
 import {decodeToken} from "../utils/decodeToken";
-import {Logout} from "../components/Login/LogOut";
+import Logout from "../components/Login/LogOut"
 import {isEmpty} from "lodash"
 import {Redirect} from "react-router";
+import UserContext from "../components/context/userContext"
 
 const Toplearn = () => {
 
@@ -41,9 +42,15 @@ const Toplearn = () => {
     return (
         <MainLayout>
             <Switch>
-                <Route path="/login" component={Login}/>
+                <Route path="/login" render={()=>isEmpty(user)?(<UserContext>
+                    <Login/>
+                </UserContext>):(<Redirect to="/"/>)}/>
                 <Route path="/logout" render={()=>isEmpty(user)?<Redirect to="/"/>: <Logout/>}/>
-                <Route path="/register" component={Register}/>
+                <Route path="/register" render={()=>isEmpty(user)?(
+                   <UserContext>
+                       <Register/>
+                   </UserContext>
+                ):(<Redirect to='/' />)}/>
                 <Route path="/archive" component={Archive}/>
                 <Route path="/course/:id" component={SingleCourse}/>
                 <Route path="/profile" component={UserProfile}/>
