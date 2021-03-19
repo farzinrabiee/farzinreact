@@ -2,6 +2,8 @@ import React, { Fragment,useEffect } from "react";
 import Pagination from "../common/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {getSingleCourse} from "../../actions/course";
+import {ShowImage} from "../common/ShowImage";
+import {Link} from "react-router-dom";
 
 const SingleCourse = (props) => {
     const course=useSelector(state=>state.course)
@@ -20,10 +22,13 @@ const SingleCourse = (props) => {
                 <header>
                     <h1> {course.title} </h1>
                 </header>
+
+
                 <div className="row">
                     <div className="col-md-8 col-sm-12 col-xs-12 pull-left">
                         <section className="term-description">
-                            <img src={`https://toplearnapi.ghorbany.dev/${course.imageUrl}`} />
+                            {/*<img src={`https://toplearnapi.ghorbany.dev/${course.imageUrl}`} />*/}
+                            <ShowImage image={course.imageUrl}/>
 
 
                             <p>
