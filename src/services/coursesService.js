@@ -14,3 +14,7 @@ export const getCourses = () => {
 export const getCourse = (courseId) => {
     return http.get(`${config.toplearnapi}/api/course/${courseId}`);
 };
+export const newCourse=(course)=>{
+    return http.post(`${config.toplearnapi}/api/course`,course)
+}
+

@@ -14,7 +14,7 @@ export const AdminContext=({courses,children})=>{
 
     const courseData = paginate(courses, currentPage, perPage);
     return(
-        <DashContext.Provider value={{currentPage:currentPage,setCurrentPage,perPage,handlePageChange:handlePageChange(),courseData}}>
+        <DashContext.Provider value={{currentPage,setCurrentPage,perPage,handlePageChange,courseData}}>
             {children}
 
 

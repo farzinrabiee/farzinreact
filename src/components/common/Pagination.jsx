@@ -3,7 +3,8 @@ import {range} from "lodash"
 
 const Pagination = ({totalCourse, perPage,currentPage,onPageChange}) => {
 
-    const pageCount = Math.ceil(totalCourse / perPage)
+    const pageCount = Math.ceil(
+        perPage)
     console.log(pageCount)
     if (pageCount === 1) return null
     const pages = range(1, pageCount + 1)

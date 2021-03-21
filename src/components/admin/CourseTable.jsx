@@ -3,7 +3,7 @@ import Pagination from "./../common/Pagination";
 import {DashContext} from "../context/DashContext";
 
 
-const CourseTable = ({courses}) => {
+const CourseTable = () => {
 const context=useContext(DashContext)
     const {courseData,perPage,currentPage,handlePageChange}=context
 
