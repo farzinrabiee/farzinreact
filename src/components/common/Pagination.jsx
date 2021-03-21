@@ -4,8 +4,10 @@ import {range} from "lodash"
 const Pagination = ({totalCourse, perPage,currentPage,onPageChange}) => {
 
     const pageCount = Math.ceil(totalCourse / perPage)
+    console.log(pageCount)
     if (pageCount === 1) return null
     const pages = range(1, pageCount + 1)
+    console.log(pages)
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination justify-content-center">

@@ -28,6 +28,12 @@ const TopNavs = () => {
                             <div className="loggein ">
                                 <i className="zmdi zmdi-account"/>
                                 <NavLink to="/profile">{user.fullname} / </NavLink>
+                                {user.isAdmin?(
+
+                                    <NavLink to="/dashboard">
+                                        پنل آدمین/
+                                    </NavLink>
+                                ):null}
                                 <NavLink to="/logout">خروج</NavLink>
                             </div>
 

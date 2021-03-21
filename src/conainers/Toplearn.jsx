@@ -16,6 +16,11 @@ import Logout from "../components/Login/LogOut"
 import {isEmpty} from "lodash"
 import {Redirect} from "react-router";
 import UserContext from "../components/context/userContext"
+import NotFound from "../components/common/NotFound";
+import PrivateLayout from "../components/Layouts/PrivateLayout";
+import Dashboard from "../components/admin/Dashboard";
+import CourseTable from "../components/admin/CourseTable";
+import {AdminContext} from "../components/context/AdminContext";
 
 const Toplearn = () => {
 
@@ -40,23 +45,37 @@ const Toplearn = () => {
 
 
     return (
-        <MainLayout>
-            <Switch>
-                <Route path="/login" render={()=>isEmpty(user)?(<UserContext>
-                    <Login/>
-                </UserContext>):(<Redirect to="/"/>)}/>
-                <Route path="/logout" render={()=>isEmpty(user)?<Redirect to="/"/>: <Logout/>}/>
-                <Route path="/register" render={()=>isEmpty(user)?(
-                   <UserContext>
-                       <Register/>
-                   </UserContext>
-                ):(<Redirect to='/' />)}/>
-                <Route path="/archive" component={Archive}/>
-                <Route path="/course/:id" component={SingleCourse}/>
-                <Route path="/profile" component={UserProfile}/>
-                <Route path="/" exact render={() => <Course courses={indexCourse}/>}/>
-            </Switch>
-        </MainLayout>
+      <Switch>
+          <Route path={["/dashboard"]}>
+              <PrivateLayout>
+                  <Route path="/dashboard/courses" render={()=>!isEmpty(user) && user.isAdmin ?(<AdminContext courses={courses}><CourseTable /></AdminContext>):(<Redirect to="/"/> )}/>
+                   <Route path="/dashboard" render={()=> !isEmpty(user)&& user.isAdmin ? (<Dashboard courses={courses}/> ):(<Redirect to="/"/>) }/>
+              </PrivateLayout>
+
+
+          </Route>
+          <Route path="/">
+              <MainLayout>
+                  <Switch>
+                      <Route path="/login" render={()=>isEmpty(user)?(<UserContext>
+                          <Login/>
+                      </UserContext>):(<Redirect to="/"/>)}/>
+                      <Route path="/logout" render={()=>isEmpty(user)?<Redirect to="/"/>: <Logout/>}/>
+                      <Route path="/register" render={()=>isEmpty(user)?(
+                          <UserContext>
+                              <Register/>
+                          </UserContext>
+                      ):(<Redirect to='/' />)}/>
+                      <Route path="/archive" component={Archive}/>
+                      <Route path="/course/:id" component={SingleCourse}/>
+                      <Route path="/profile" component={UserProfile}/>
+                      <Route path="/" exact render={() => <Course courses={indexCourse}/>}/>
+                      <Route path="*" exact component={NotFound}/>
+                  </Switch>
+              </MainLayout>
+
+          </Route>
+      </Switch>
     );
 };
 export default Toplearn;
