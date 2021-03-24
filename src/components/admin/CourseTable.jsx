@@ -118,6 +118,7 @@ const CourseTable = () => {
         handlePageChange,
         courseData,
         openNewCourseDialog,
+        openEditCourseDialog
     } = context;
 
     return (
@@ -138,7 +139,7 @@ const CourseTable = () => {
                                     verticalAlign: "middle",
                                     marginLeft: "1em",
                                 }}
-                            ></span>
+                            />
                             اضافه کردن دوره جدید
                         </button>
                         <input
@@ -181,7 +182,7 @@ const CourseTable = () => {
                                         : `${course.price}`}
                                 </td>
                                 <td>
-                                    <button className="btn btn-warning">
+                                    <button className="btn btn-warning" onClick={()=>openEditCourseDialog(course)}>
                                         ویرایش
                                     </button>
                                 </td>

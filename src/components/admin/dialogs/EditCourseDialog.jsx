@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch} from "react-redux";
 import {DialogContent, DialogOverlay} from "@reach/dialog";
+import {handleCourseUpdate} from "../../../actions/courses";
 
 
 export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
@@ -38,11 +39,11 @@ export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
             data.append("imageUrl", e.target.imageUrl.files[0]);
         } else {
             data.append("imageUrl", imageUrl);
+        }
             data.append("info", info);
             console.log(data);
             dispatch(handleCourseUpdate(courseId, data));
             closeDialog();
-        }
 
     }
     return (

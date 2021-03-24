@@ -20,16 +20,15 @@ export const AdminContext = ({courses, children}) => {
     const openEditCourseDialog=(course)=>{
         setEditCourseDialog(true)
         setCurrentCourse(course)
-
-
     }
+    const closeEditCourseDialog = () => setEditCourseDialog(false);
 
     const courseData = paginate(courses, currentPage, perPage);
     return (
         <DashContext.Provider
-            value={{currentPage, setCurrentPage, perPage, handlePageChange, courseData, openNewCourseDialog}}>
+            value={{currentPage, setCurrentPage, perPage, handlePageChange, courseData, openNewCourseDialog,openEditCourseDialog}}>
             <NewCourseDialog showDialog={newCourseDialog} closeDialog={closeNewCourseDialog}/>
-            <EditCourseDialog />
+            <EditCourseDialog showDialog={editCourseDialog} closeDialog={closeEditCourseDialog}  course={currentCourse}/>
 
             {children}
 
