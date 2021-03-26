@@ -1,4 +1,4 @@
-import {getCourses, newCourse, updateCoursee} from "../services/coursesService";
+import {deleteCourse, getCourses, newCourse, updateCourse} from "../services/coursesService";
 import {successMessage} from "../utils/message";
 
 
@@ -10,39 +10,70 @@ export const getAllCourses = () => {
 }
 export const createNewCourse = (course) => {
     return async (dispatch, getState) => {
-        const {data, status} = await newCourse(course);
+        const { data, status } = await newCourse(course);
         if (status === 201) successMessage("دوره با موفقیت ساخته شد");
         await dispatch({
             type: "ADD_COURSE",
             payload: [...getState().courses, data.course],
         });
     };
-}
-export const handleCourseUpdate = (courseId, updateCourse) => {
+};
+
+export const handleCourseUpdate = (courseId, updatedCourse) => {
     return async (dispatch, getState) => {
-        const courses = [...getState().courses]
-        const updateCourses = [...courses]
-        const courseIndex = updateCourses.findIndex(course => course._id === courseId)
-        let course = updateCourses[courseIndex]
-        course = [...Object.fromEntries(updateCourse)]
-        updateCourses[courseIndex] = course
-         try {
-             await dispatch({type: "UPDATE_COURSE", payload: [...updateCourses]})
-            const {data, status} = await updateCoursee(courseId, updateCourse)
+        const courses = [...getState().courses];
+        const filteredCourses = courses.filter(
+            (course) => course._id !== courseId
+        );
+        // const updatedCourses = [...courses];
+        // const courseIndex = updatedCourses.findIndex(
+        //     (course) => course._id === courseId
+        // );
+        //
+        // let course = updatedCourses[courseIndex];
+        //
+        // course = { ...Object.fromEntries(updatedCourse) };
+        // updatedCourses[courseIndex] = course;
+
+        try {
+
+            const { data, status } = await updateCourse(
+                courseId,
+                updatedCourse
+            );
+            console.log(data);
             if (status === 200) {
-                successMessage("کازربر با موفقیت تغییر یافت ")
+                successMessage("دوره با موفقیت ویرایش شد.");
+                await dispatch({
+                    type: "UPDATE_COURSE",
+                    payload: [...filteredCourses,data.course],
+                });
+
 
             }
-
         } catch (ex) {
-            await dispatch({type: "UPDATE_COURSE", payload: [...courses]})
-
+            await dispatch({ type: "UPDATE_COURSE", payload: [...courses] });
         }
-    }
+    };
+};
 
-}
-export const handleCourseDelete=(courseId)=>{
+export const handleCourseDelete = (courseId) => {
+    return async (dispatch, getState) => {
+        const courses = [...getState().courses];
+        const filteredCourses = courses.filter(
+            (course) => course._id !== courseId
+        );
 
+        try {
+            await dispatch({
+                type: "DELETE_COURSE",
+                payload: [...filteredCourses],
+            });
+            const { status } = await deleteCourse(courseId);
 
-}
-
+            if (status === 200) successMessage("دوره با موفقیت پاک شد.");
+        } catch (ex) {
+            await dispatch({ type: "DELETE_COURSE", payload: [...courses] });
+        }
+    };
+};

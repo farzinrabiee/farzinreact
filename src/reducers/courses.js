@@ -6,6 +6,8 @@ export const coursesReducers=(state=[],action)=>{
             return [...action.payload]
         case "UPDATE_COURSE":
             return [...action.payload]
+        case "DELETE_COURSE":
+            return [...action.payload]
         default:
             return state
     }

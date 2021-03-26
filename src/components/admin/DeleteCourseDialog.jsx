@@ -1,6 +1,8 @@
 import React from "react";
 import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
 import { useDispatch } from "react-redux";
+import {handleCourseDelete} from "../../actions/courses";
+
 
 const DeleteCourseDialog = ({ showDialog, closeDialog, course }) => {
     const dispatch = useDispatch();

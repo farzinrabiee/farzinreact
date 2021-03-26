@@ -19,38 +19,36 @@ export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
         setPrice(course.price);
         setImageUrl(course.imageUrl);
         setInfo(course.info);
+
         return () => {
             setCourseId();
             setTitle();
             setPrice();
             setImageUrl();
             setInfo();
-
-
         };
     }, [course]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        let data = new FormData()
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        let data = new FormData();
         data.append("title", title);
         data.append("price", price);
-        if (e.target.imageUrl.files[0]) {
-            data.append("imageUrl", e.target.imageUrl.files[0]);
-        } else {
-            data.append("imageUrl", imageUrl);
-        }
-            data.append("info", info);
-            console.log(data);
-            dispatch(handleCourseUpdate(courseId, data));
-            closeDialog();
+        if (event.target.imageUrl.files[0])
+            data.append("imageUrl", event.target.imageUrl.files[0]);
+        else data.append("imageUrl", imageUrl);
+        data.append("info", info);
+        console.log(data);
+        dispatch(handleCourseUpdate(courseId, data));
+        closeDialog();
+    };
 
-    }
     return (
         <DialogOverlay
             isOpen={showDialog}
             onDismiss={closeDialog}
-            style={{ background: "hsla(0, 100%, 100%, 0.9)" }}
+            style={{background: "hsla(0, 100%, 100%, 0.9)"}}
         >
             <DialogContent
                 style={{
@@ -64,7 +62,7 @@ export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
                         <input
                             type="text"
                             name="title"
-                            style={{ marginBottom: 3 }}
+                            style={{marginBottom: 3}}
                             className="form-control"
                             placeholder="عنوان دوره"
                             aria-describedby="title"
@@ -75,7 +73,7 @@ export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
                         <input
                             type="text"
                             name="price"
-                            style={{ marginBottom: 3 }}
+                            style={{marginBottom: 3}}
                             className="form-control"
                             placeholder="قیمت دوره به تومان"
                             aria-describedby="price"
@@ -86,7 +84,7 @@ export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
                         <input
                             type="file"
                             name="imageUrl"
-                            style={{ marginBottom: 3 }}
+                            style={{marginBottom: 3}}
                             className="form-control mb-2"
                             aria-describedby="imageUrl"
                         />
@@ -94,7 +92,7 @@ export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
                             name="info"
                             placeholder="توضیحات دوره"
                             className="form-control"
-                            style={{ marginBottom: 3 }}
+                            style={{marginBottom: 3}}
                             value={info}
                             onChange={(e) => setInfo(e.target.value)}
                         />
@@ -102,13 +100,13 @@ export const EditCourseDialog = ({showDialog, closeDialog, course}) => {
                         <button
                             type="submit"
                             className="btn btn-success "
-                            style={{ margin: "1em" }}
+                            style={{margin: "1em"}}
                         >
                             ویرایش دوره
                         </button>
                         <button
                             className="btn btn-warning mr-5"
-                            style={{ margin: "1em" }}
+                            style={{margin: "1em"}}
                             onClick={closeDialog}
                         >
                             انصراف

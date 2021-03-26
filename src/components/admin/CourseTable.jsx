@@ -118,7 +118,10 @@ const CourseTable = () => {
         handlePageChange,
         courseData,
         openNewCourseDialog,
-        openEditCourseDialog
+        openEditCourseDialog,
+        openDeleteCourseDialog,
+        setSearch,
+        filteredCourses
     } = context;
 
     return (
@@ -145,6 +148,7 @@ const CourseTable = () => {
                         <input
                             type="text"
                             placeholder="جستجوی دوره"
+                            onChange={e=>setSearch(e.target.value)}
                             className="form-control"
                             style={{
                                 width: "50%",
@@ -187,7 +191,7 @@ const CourseTable = () => {
                                     </button>
                                 </td>
                                 <td>
-                                    <button className="btn btn-danger">
+                                    <button className="btn btn-danger" onClick={()=>openDeleteCourseDialog(course)}>
                                         حذف
                                     </button>
                                 </td>
@@ -198,7 +202,7 @@ const CourseTable = () => {
                 </div>
                 <div className="navbar-fixed-bottom text-center footer">
                     <Pagination
-                        totalCourse={courseData.length}
+                        totalCourse={filteredCourses.length}
                         currentPage={currentPage}
                         perPage={perPage}
                         onPageChange={handlePageChange}

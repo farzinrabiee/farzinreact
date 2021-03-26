@@ -49,11 +49,30 @@ const Toplearn = () => {
       <Switch>
           <Route path={["/dashboard"]}>
               <PrivateLayout>
-                  <Route path="/dashboard/courses" render={()=>!isEmpty(user) && user.isAdmin ?(<AdminContext courses={courses}><CourseTable /></AdminContext>):(<Redirect to="/"/> )}/>
-                   <Route path="/dashboard" render={()=> !isEmpty(user)&& user.isAdmin ? (<Dashboard courses={courses}/> ):(<Redirect to="/"/>) }/>
+                  <Route
+                      path="/dashboard/courses"
+                      render={() =>
+                          !isEmpty(user) && user.isAdmin ? (
+                              <AdminContext courses={courses}>
+                                  <CourseTable />
+                              </AdminContext>
+                          ) : (
+                              <Redirect to="/" />
+                          )
+                      }
+                  />
+                  <Route
+                      path="/dashboard"
+                      exact
+                      render={() =>
+                          !isEmpty(user) && user.isAdmin ? (
+                              <Dashboard courses={courses} />
+                          ) : (
+                              <Redirect to="/" />
+                          )
+                      }
+                  />
               </PrivateLayout>
-
-
           </Route>
           <Route path="/">
               <MainLayout>
