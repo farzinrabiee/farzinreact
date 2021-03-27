@@ -121,7 +121,9 @@ const CourseTable = () => {
         openEditCourseDialog,
         openDeleteCourseDialog,
         setSearch,
-        filteredCourses
+        filteredCourses,
+        sortCoursesDes,
+        sortCoursesAsc
     } = context;
 
     return (
@@ -162,7 +164,19 @@ const CourseTable = () => {
                         <tr>
                             <th scope="col">عنوان دوره</th>
                             <th scope="col">تصویر دوره</th>
-                            <th scope="col">قیمت دوره (تومان)</th>
+                            <th scope="col">قیمت دوره (تومان)
+                                <span
+                                    className="fa fa-long-arrow-up"
+                                    style={{ marginRight: "0.5em" }}
+                                    onClick={sortCoursesDes}
+                                >نزولی</span>
+                                <span
+                                    className="fa fa-long-arrow-down"
+                                    style={{ marginRight: "0.5em" }}
+                                    onClick={sortCoursesAsc}
+                                >صعودی</span>
+
+                            </th>
                             <th scope="col">ویرایش</th>
                             <th scope="col">حذف</th>
                         </tr>

@@ -107,36 +107,59 @@
 //
 //     )
 // }
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useDispatch } from "react-redux";
 import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
 import { createNewCourse } from "../../../actions/courses";
+import {DashContext} from "../../context/DashContext";
 
 const NewCourseDialog = ({ showDialog, closeDialog }) => {
     const [title, setTitle] = useState();
     const [price, setPrice] = useState();
     const [info, setInfo] = useState();
+    const [imageUrl,setImageUrl]=useState()
+    const [,forceUpdate]=useState()
+
 
     const dispatch = useDispatch();
+
+    const context=useContext(DashContext)
+    const {validator}=context
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
+
         try {
-            var data = new FormData();
-            data.append("title", title);
-            data.append("price", Number.parseInt(price));
-            data.append("imageUrl", event.target.imageUrl.files[0]);
-            data.append("info", info);
+
+            if (validator.current.allValid()){
+                var data = new FormData();
+                data.append("title", title);
+                data.append("price", Number.parseInt(price));
+                data.append("imageUrl", event.target.imageUrl.files[0]);
+                data.append("info", info);
 
 
-            //Dispatch
-            dispatch(createNewCourse(data));
-            closeDialog();
+                //Dispatch
+                dispatch(createNewCourse(data));
+                closeDialog();
+
+            }else {
+                validator.current.showMessages()
+                forceUpdate(1)
+            }
+
+
         } catch (ex) {
             console.log(ex);
         }
-    };
+
+
+
+        }
+
+
+
 
     return (
         <DialogOverlay
@@ -161,8 +184,14 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
                             placeholder="عنوان دوره"
                             aria-describedby="title"
                             value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={(e) =>{
+                                setTitle(e.target.value)
+                                validator.current.showMessageFor("title")
+                            }}
                         />
+                        {
+                            validator.current.message("title",title,"required|min:5")
+                        }
 
                         <input
                             type="text"
@@ -172,8 +201,12 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
                             placeholder="قیمت دوره به تومان"
                             aria-describedby="price"
                             value={price}
-                            onChange={(e) => setPrice(e.target.value)}
+                            onChange={(e) => {
+                                setPrice(e.target.value)
+                                validator.current.showMessageFor("price")
+                            }}
                         />
+                        {validator.current.message("price",price,"required|integer")}
 
                         <input
                             type="file"
@@ -181,15 +214,26 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
                             style={{ marginBottom: 3 }}
                             className="form-control mb-2"
                             aria-describedby="imageUrl"
+                            onChange={e=>{
+                                setImageUrl(true)
+                                validator.current.showMessageFor("imageUrl")
+                            }}
                         />
+                        {
+                            validator.current.message("imageUrl",imageUrl,"required")
+                        }
                         <textarea
                             name="info"
                             placeholder="توضیحات دوره"
                             className="form-control"
                             style={{ marginBottom: 3 }}
                             value={info}
-                            onChange={(e) => setInfo(e.target.value)}
+                            onChange={(e) => {
+                                setInfo(e.target.value)
+                                validator.current.showMessageFor("info")
+                            }}
                         />
+                        {validator.current.message("info",info,"required")}
 
                         <button
                             type="submit"

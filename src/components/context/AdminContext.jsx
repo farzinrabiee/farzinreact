@@ -1,9 +1,11 @@
-import React, {useState,useEffect} from "react";
+import React, {useState,useEffect,useRef} from "react";
+import {orderBy} from "lodash"
 import {DashContext} from "./DashContext";
 import {paginate} from "../../utils/paginate";
 import NewCourseDialog from "../admin/dialogs/NewCourseDialog";
 import {EditCourseDialog} from "../admin/dialogs/EditCourseDialog";
 import DeleteCourseDialog from "../admin/DeleteCourseDialog";
+import SimpleReactValidator from "simple-react-validator";
 
 
 export const AdminContext = ({courses, children}) => {
@@ -20,6 +22,19 @@ export const AdminContext = ({courses, children}) => {
 
         setCourseList(courses)
     }, [courses]);
+
+
+    const validator = useRef(
+        new SimpleReactValidator({
+            messages: {
+                required: "پر کردن این فیلد الزامی میباشد",
+                min: "کمتر از 5 کاراکتر نباید باشد",
+                email: "ایمیل نوشته شده صحیح نمی باشد",
+                integer:"قیمت باید به عدد باشد"
+            },
+            element: message => <div style={{ color: "red" }}>{message}</div>
+        })
+    );
 
 
     const openNewCourseDialog = () => setNewCourseDialog(true)
@@ -47,6 +62,10 @@ export const AdminContext = ({courses, children}) => {
     const filteredCourses = courseList.filter(course=>course.title.includes(search))
 
 
+    const sortCoursesDes=()=>{setCourseList(orderBy(courseList,"price","asc"))}
+    const sortCourseAsc=()=>{setCourseList(orderBy(courseList,"price","desc"))}
+
+
     const courseData = paginate(filteredCourses, currentPage, perPage);
     return (
         <DashContext.Provider
@@ -60,7 +79,10 @@ export const AdminContext = ({courses, children}) => {
                 openEditCourseDialog,
                 openDeleteCourseDialog,
                 setSearch,
-                filteredCourses
+                filteredCourses,
+                sortCoursesDes,
+                sortCourseAsc,
+                validator
 
             }}>
             <NewCourseDialog showDialog={newCourseDialog} closeDialog={closeNewCourseDialog}/>

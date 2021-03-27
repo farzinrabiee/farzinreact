@@ -22,7 +22,7 @@
 //         },
 //         element: message => <div style={{color: "red"}}>{message}</div>
 //     }))
-//     const resetStates = () => {
+//     const  = () => {
 //         setFullname("");
 //         setEmail("");
 //         setPassword("");
@@ -45,7 +45,7 @@
 //                     localStorage.setItem("token",data.token)
 //                     // dispatch(addUser(decodeToken(data.token).payload.user))
 //                     history.replace("/")
-//                     resetStates()
+//                     ()
 //                 }
 //             } else {
 //                 validator.current.showMessages()
@@ -79,7 +79,7 @@
 //                     successMessage("کاربر با موفقیت وارد شد ")
 //                     history.push("/Login")
 //
-//                     resetStates();
+//                     ();
 //                 }
 //             } else {
 //                 validator.current.showMessages();
@@ -120,7 +120,7 @@
 //
 //  }
 //  export default withRouter(UserContext)
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch } from "react-redux";
 import { context } from "./Context";
@@ -141,6 +141,17 @@ const UserContext = ({ children, history }) => {
 
     const dispatch = useDispatch();
 
+
+    useEffect(() => {
+        return () => {
+            setFullname();
+            setEmail();
+            setPassword();
+            setPolicy();
+        };
+    }, []);
+
+
     const validator = useRef(
         new SimpleReactValidator({
             messages: {
@@ -152,13 +163,7 @@ const UserContext = ({ children, history }) => {
         })
     );
 
-    const resetStates = () => {
-        setFullname("");
-        setEmail("");
-        setPassword("");
-        setPolicy();
-    };
-
+   
     const handleLogin = async event => {
         event.preventDefault();
         const user = { email, password };
@@ -172,7 +177,7 @@ const UserContext = ({ children, history }) => {
                     dispatch(addUser(decodeToken(data.token).payload.user));
                     dispatch(hideLoading())
                     history.replace("/");
-                    resetStates();
+
                 }
             } else {
                 validator.current.showMessages();
