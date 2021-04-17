@@ -74,7 +74,7 @@ const Toplearn = () => {
                   />
               </PrivateLayout>
           </Route>
-          <Route path="/">
+          <Route path={"/"}>
               <MainLayout>
                   <Switch>
                       <Route path="/login" render={()=>isEmpty(user)?(<UserContext>

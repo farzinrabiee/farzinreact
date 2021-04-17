@@ -233,7 +233,7 @@ const NewCourseDialog = ({ showDialog, closeDialog }) => {
                                 validator.current.showMessageFor("info")
                             }}
                         />
-                        {validator.current.message("info",info,"required")}
+                        {validator.current.message("info",info,"required    ")}
 
                         <button
                             type="submit"

@@ -1,4 +1,4 @@
-import {deleteCourse, getCourses, newCourse, updateCourse} from "../services/coursesService";
+import {deleteCourse,  getCourses, newCourse, updateCourse} from "../services/coursesService";
 import {successMessage} from "../utils/message";
 
 
